@@ -9,12 +9,11 @@ describe('Base Express Server Tests', () => {
   beforeEach(() => {
     const nbeBaseServer = new NBEBaseServer();
     nbeBaseServer.createRoute('/api/sample/feature');
-    nbeBaseServer.addSubRoutes('/api/sample/feature', '/', HttpMethod.GET, getAllHandler)
-    nbeBaseServer.addSubRoutes('/api/sample/feature', '/:id/:throwException?', HttpMethod.GET, getByIdHandler)
-    nbeBaseServer.addSubRoutes('/api/sample/feature', '/', HttpMethod.POST, createHandler)
+    nbeBaseServer.addSubRoutes('/api/sample/feature', '/', HttpMethod.GET, getAllHandler);
+    nbeBaseServer.addSubRoutes('/api/sample/feature', '/:id/:throwException?', HttpMethod.GET, getByIdHandler);
+    nbeBaseServer.addSubRoutes('/api/sample/feature', '/', HttpMethod.POST, createHandler);
 
     app = nbeBaseServer.getServer();
-
   });
   describe('Test Server can instentiate properly', () => {
     test('Health Chck for Base server should return 200', async () => {

@@ -41,4 +41,3 @@ export const createHandler = async (req: NBERequest, res: NBEResponse) => {
     nbeSend(500, e.message, res);
   }
 };
-
