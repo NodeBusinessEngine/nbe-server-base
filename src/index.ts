@@ -54,7 +54,9 @@ export class NBEBaseServer {
 
   private buildRoutes() {
     for(const key in this.routes) {
+      if(key) {
       this.app.use(key, this.routes[key]);
+      }
     }
   }
 }
