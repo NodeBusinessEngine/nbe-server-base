@@ -15,10 +15,10 @@ export class NBEBaseServer {
     this.routerArray = [];
   }
   
-  public addMiddleWare(middleWare: Function) {
+  public addMiddleWare(middleWare: any) {
     this.middlewareArray.push(middleWare)
   }
-  public addRouter(baseUrl: string, handler: Function) {
+  public addRouter(baseUrl: string, handler: any) {
     this.routerArray.push({baseUrl, handler});
   }
 
