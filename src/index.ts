@@ -14,12 +14,12 @@ export class NBEBaseServer {
     this.middlewareArray = [];
     this.routerArray = [];
   }
-  
+
   public addMiddleWare(middleWare: any) {
-    this.middlewareArray.push(middleWare)
+    this.middlewareArray.push(middleWare);
   }
   public addRouter(baseUrl: string, handler: any) {
-    this.routerArray.push({baseUrl, handler});
+    this.routerArray.push({ baseUrl, handler });
   }
 
   public getServer() {
@@ -28,12 +28,12 @@ export class NBEBaseServer {
     this.app.use(express.json());
     this.app.use(actuator());
     this.buildMiddleware();
-    this.buildRoutes()
+    this.buildRoutes();
     this.app.use(errorHandler);
     this.app.use(notFoundHandler);
     return this.app;
   }
-  
+
   private buildMiddleware() {
     if (this.middlewareArray.length > 0) {
       for (const middleWare of this.middlewareArray) {
