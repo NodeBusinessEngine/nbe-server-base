@@ -1,25 +1,35 @@
-import express from 'express';
+import express, { Router } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import actuator from 'express-actuator';
 import errorHandler from './common-middleware/error.middleware';
 import notFoundHandler from './common-middleware/not-found.middleware';
+import {HttpMethod} from './common-domain/http-common'
 
 export class NBEBaseServer {
   private app: any;
   private middlewareArray: any[];
-  private routerArray: any[];
+  private routes: any;
   constructor() {
     this.app = express();
     this.middlewareArray = [];
-    this.routerArray = [];
+    this.routes = {};
   }
 
   public addMiddleWare(middleWare: any) {
     this.middlewareArray.push(middleWare);
   }
-  public addRouter(baseUrl: string, handler: any) {
-    this.routerArray.push({ baseUrl, handler });
+
+  public createRoute(basePath: string) {
+    const isDubplicatePath = Object.keys(this.routes).find((key:string) => key === basePath)
+    if(!isDubplicatePath) this.routes[basePath] = express.Router();
+  }
+  public addSubRoutes(basePath: string, subPath: string, type: HttpMethod, handler: any) {
+    const route: Router = this.routes[basePath];
+    if(route) {
+      if(type === HttpMethod.GET) route.get(subPath, handler)
+      if(type === HttpMethod.POST) route.post(subPath, handler)
+    }
   }
 
   public getServer() {
@@ -43,11 +53,8 @@ export class NBEBaseServer {
   }
 
   private buildRoutes() {
-    if (this.routerArray.length > 0) {
-      for (const route of this.routerArray) {
-        const { baseUrl = '', handler } = route;
-        if (baseUrl && handler) this.app.use(baseUrl, handler);
-      }
+    for(const key in this.routes) {
+      this.app.use(key, this.routes[key]);
     }
   }
 }

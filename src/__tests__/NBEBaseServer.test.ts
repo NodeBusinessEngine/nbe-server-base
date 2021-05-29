@@ -1,15 +1,20 @@
 import { NBEBaseServer } from '../index';
 import request from 'supertest';
 
-import featureRouter from './sampleFeature/sampleFeature.router';
-import express from 'express';
+import { createHandler, getAllHandler, getByIdHandler } from './sampleFeature/sampleFeature.router';
+import { HttpMethod } from '../common-domain/http-common';
 describe('Base Express Server Tests', () => {
   let app: any = null;
 
   beforeEach(() => {
     const nbeBaseServer = new NBEBaseServer();
-    nbeBaseServer.addRouter('/api/sample/feature', featureRouter);
+    nbeBaseServer.createRoute('/api/sample/feature');
+    nbeBaseServer.addSubRoutes('/api/sample/feature', '/', HttpMethod.GET, getAllHandler)
+    nbeBaseServer.addSubRoutes('/api/sample/feature', '/:id/:throwException?', HttpMethod.GET, getByIdHandler)
+    nbeBaseServer.addSubRoutes('/api/sample/feature', '/', HttpMethod.POST, createHandler)
+
     app = nbeBaseServer.getServer();
+
   });
   describe('Test Server can instentiate properly', () => {
     test('Health Chck for Base server should return 200', async () => {

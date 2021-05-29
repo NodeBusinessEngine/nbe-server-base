@@ -1,7 +1,4 @@
-import { exception } from 'console';
-import express, { Request, Response } from 'express';
-import HttpException from '../../common-domain/http-exception';
-const featureRouter = express.Router();
+import { NBERequest, NBEResponse, nbeSend } from '../../common-domain/http-common';
 
 const testUserData = [
   { id: 1, name: 'Suren Rodrigo', age: 39, sex: 'Male' },
@@ -11,39 +8,37 @@ const testUserData = [
   { id: 5, name: 'Irangani Rodrigo', age: 74, sex: 'Female' },
 ];
 
-featureRouter.get('/', async (req: Request, res: Response) => {
-  res.status(200).send(testUserData);
-});
-
-featureRouter.get('/:id/:throwException?', async (req: Request, res: Response) => {
+export const getAllHandler = async (req: NBERequest, res: NBEResponse) => {
+  nbeSend(200, testUserData, res);
+};
+export const getByIdHandler = async (req: NBERequest, res: NBEResponse) => {
   const id: number = parseInt(req.params.id, 10);
   const throwException = req.params.throwException ? true : false;
   try {
     if (throwException) throw new Error('Testing Error Thrown');
     const result = testUserData.find((user) => user.id === id);
     if (result) {
-      res.status(200).send(result);
+      nbeSend(200, result, res);
     } else {
-      res.status(404).send('User not found');
+      nbeSend(404, 'User Not Found', res);
     }
   } catch (e) {
-    res.status(500).send(e.message);
+    nbeSend(500, e.message, res);
   }
-});
+};
 
-featureRouter.post('/', async (req: Request, res: Response) => {
+export const createHandler = async (req: NBERequest, res: NBEResponse) => {
   try {
     const { id = 0, name = '', age = 0, sex = '' } = req.body;
     if (!id || !name || !age || !sex) {
-      res.status(400).send('Data Missing to create the user');
+      nbeSend(400, 'Data Missing to Create the user', res);
     } else {
       const newUser = { id, name, age, sex };
       testUserData.push(newUser);
-      res.status(201).send(newUser);
+      nbeSend(201, newUser, res);
     }
   } catch (e) {
-    res.status(500).send(e.message);
+    nbeSend(500, e.message, res);
   }
-});
+};
 
-export default featureRouter;
