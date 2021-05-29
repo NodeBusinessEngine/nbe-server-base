@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import actuator from 'express-actuator';
 import errorHandler from './common-middleware/error.middleware';
 import notFoundHandler from './common-middleware/not-found.middleware';
+import loggerMiddleware from './common-middleware/logger.middleware';
 import { HttpMethod } from './common-domain/http-common';
 
 export class NBEBaseServer {
@@ -37,6 +38,7 @@ export class NBEBaseServer {
     this.app.use(cors());
     this.app.use(express.json());
     this.app.use(actuator());
+    this.app.use(loggerMiddleware);
     this.buildMiddleware();
     this.buildRoutes();
     this.app.use(errorHandler);
