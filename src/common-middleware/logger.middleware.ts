@@ -1,5 +1,5 @@
 import morgan, { StreamOptions } from 'morgan';
-import { logHttp } from '@nbe/nbe-commono-utils/lib/logger';
+import { logHttp } from '@bksdrodrigo/nbe-commono-utils/lib/logger';
 
 // Override the stream method by telling
 // Morgan to use our custom logger instead of the console.log.
