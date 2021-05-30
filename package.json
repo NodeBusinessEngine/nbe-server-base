@@ -1,5 +1,5 @@
 {
-  "name": "@nbe/nbe-server-base",
+  "name": "@bksdrodrigo/nbe-server-base",
   "version": "1.0.3",
   "description": "Node Business Server Base",
   "main": "lib/index.js",
@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NodeBusinessEngine/nbe-server-base.git.git"
+    "url": "git+https://github.com/NodeBusinessEngine/nbe-server-base.git"
   },
   "keywords": [
     "Typescript",
@@ -53,9 +53,6 @@
   "files": [
     "lib/**/*"
   ],
-  "publishConfig": {
-    "registry": "http://localhost:8081/repository/nbe-repo-hosted/"
-  },
   "dependencies": {
     "@nbe/nbe-commono-utils": "^1.0.2",
     "@types/morgan": "^1.9.2",
