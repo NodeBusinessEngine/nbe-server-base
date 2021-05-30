@@ -54,7 +54,7 @@
     "lib/**/*"
   ],
   "dependencies": {
-    "@nbe/nbe-commono-utils": "^1.0.2",
+    "@bksdrodrigo/nbe-commono-utils": "^1.0.3",
     "@types/morgan": "^1.9.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
